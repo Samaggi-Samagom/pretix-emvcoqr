@@ -1,0 +1,3 @@
+recursive-include pretix_emvcoqr/static *
+recursive-include pretix_emvcoqr/templates *
+recursive-include pretix_emvcoqr/locale *
