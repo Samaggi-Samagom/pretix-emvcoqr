@@ -59,14 +59,14 @@ class EMVCoQRPayment(ManualPayment):
         d.move_to_end('_enabled', last=False)
         return d
 
-    def generate_qr_text(self, order) -> str:
-        total: Decimal = order.total
-        # If total has less than two floating points, increase the floating points to two
-        if total.as_tuple().exponent > -2:
-            total = total.quantize(Decimal('1.23'))
-        total_str = str(total)
-        money_str = '54{:02d}{}'.format(len(total_str), total_str)
+    def generate_qr_text(self, amount: Decimal) -> str:
+        # If the amount has less than two floating points, increase the floating points to two
+        if amount.as_tuple().exponent > -2:
+            amount = amount.quantize(Decimal('1.23'))
+        amount_str = str(amount)
+        money_str = '54{:02d}{}'.format(len(amount_str), amount_str)
 
+        # Original credit for this: https://github.com/wannaphong/pypromptpay/blob/master/pypromptpay.py#L47
         before_check_sum = self.settings.get('emvco_qrcode_data', '0002' + '01') + money_str + '6304'
         check_sum = hex(crc16.crc16xmodem(before_check_sum.encode("ascii"), 0xffff)).replace('0x', '')
         if len(check_sum) < 4:  # Increase the checksum length to 4
@@ -83,8 +83,10 @@ class EMVCoQRPayment(ManualPayment):
 
     def payment_pending_render(self, request, payment) -> str:
         html = super().payment_pending_render(request, payment)
+        # payment.amount definition:
+        # https://github.com/pretix/pretix/blob/be67059099b73d6f01217968eba0f041026331e8/src/pretix/base/models/orders.py#L1333
         img_tag = '<img src="data:image/png;base64,{}" width="250" height="250" />' \
-            .format(self.generate_qr_image(self.generate_qr_text(payment.order)))
+            .format(self.generate_qr_image(self.generate_qr_text(payment.amount)))
         return mark_safe(html.replace('%%QR%%', img_tag))
 
 # Image is not allowed in pretix email
