@@ -28,9 +28,9 @@ cmdclass = {
 setup(
     name='pretix-emvcoqr',
     version=__version__,
-    description='Manual payment plugin with EMVCo QR Code',
+    description='Manual payment plugin for pretix with emdeded EMVCo QR Code',
     long_description=long_description,
-    url='https://github.com/Samaggi-Samagom/pretix-emvcoqr',
+    url='https://github.com/inwwin/pretix-emvcoqr',
     author='Panawat Wong-klaew',
     author_email='panawat_vista@hotmail.com',
     license='Apache',
