@@ -3,7 +3,11 @@ EMVCo QR Payment Plugin
 
 This is a plugin for `pretix`_. 
 
-Manual payment plugin with EMVCo QR Code
+Manual payment plugin with embded merchanted-presented `EMVCo QR Code <https://www.emvco.com/emv-technologies/qrcodes/>`_.
+This plugin is fully compatible with most, if not all, Thai mobile banking apps.
+
+Its configuration may be difficult to understand as it requires you to understand the EMVCo QR protocol,
+but feel free to send questions if needed.
 
 Development setup
 -----------------
@@ -26,7 +30,7 @@ License
 -------
 
 
-Copyright 2020 Panawat Wong-klaew
+Copyright 2020-21 Panawat Wong-klaew
 
 Released under the terms of the Apache License 2.0
 
